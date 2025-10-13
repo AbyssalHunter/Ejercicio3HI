@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Ejercicio3</string>
+    <string name="calcular">Calcular</string>
+    <string name="mostrar">Mostrar</string>
+    <string name="regresar">Regresar</string>
+    <string name="nombre">Nombre</string>
+    <string name="precio">Precio</string>
+    <string name="asignar">Asignar</string>
+    <string name="name">Name</string>
+    <string name="cantidad">Cantidad</string>
+</resources>
