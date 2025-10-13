@@ -16,6 +16,9 @@ class SecondActivity : AppCompatActivity() {
     private lateinit var botonMostrar: Button
     private lateinit var botonRegresar: Button
 
+    private var mostrarFlag: Boolean = false
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -31,30 +34,50 @@ class SecondActivity : AppCompatActivity() {
         botonRegresar = findViewById(R.id.button4)
 
         botonCalcular.setOnClickListener {
-            Calcular()
-            Toast.makeText(applicationContext, "Se realizo el calculo", Toast.LENGTH_SHORT).show()
+            val nombre = intent.getStringExtra("nombre")
+            val precio = intent.getFloatExtra("precio", 0f)
+            val cantidad = intent.getIntExtra("cantidad", 0)
+
+            val calcular = Calcular()
+            calcular.setNombre(nombre ?: "")
+            calcular.setPrecio(precio)
+            calcular.setCantidad(cantidad)
+
+            val resultado = calcular.calcular()
+
+            if (resultado != null && resultado > 0f) {
+                Toast.makeText(applicationContext, "Se realizo el cálculo, proceda a mostrar datos", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(applicationContext, "Cantidad excede las existencias", Toast.LENGTH_SHORT).show()
+            }
+            mostrarFlag = true
         }
 
         botonMostrar.setOnClickListener {
-            mostrar()
+            if (mostrarFlag == false){
+                Toast.makeText(applicationContext, "Primero calcula los datos", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                mostrar()
+            }
         }
 
         botonRegresar.setOnClickListener {
             regresarAMain()
         }
-
     }
 
     private fun mostrar(){
-        val dintent =  Intent(this, ThirdActivity::class.java)
+        val dintent = Intent(this, ThirdActivity::class.java)
+
+        dintent.putExtra("nombre", intent.getStringExtra("nombre"))
+        dintent.putExtra("precio", intent.getFloatExtra("precio", 0f))
+        dintent.putExtra("cantidad", intent.getIntExtra("cantidad", 0))
+
         startActivity(dintent)
     }
+
     private fun regresarAMain() {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
         finish()
     }
 }
