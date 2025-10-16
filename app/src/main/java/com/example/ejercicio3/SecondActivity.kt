@@ -34,32 +34,11 @@ class SecondActivity : AppCompatActivity() {
         botonRegresar = findViewById(R.id.button4)
 
         botonCalcular.setOnClickListener {
-            val nombre = intent.getStringExtra("nombre")
-            val precio = intent.getFloatExtra("precio", 0f)
-            val cantidad = intent.getIntExtra("cantidad", 0)
-
-            val calcular = Calcular()
-            calcular.setNombre(nombre ?: "")
-            calcular.setPrecio(precio)
-            calcular.setCantidad(cantidad)
-
-            val resultado = calcular.calcular()
-
-            if (resultado != null && resultado > 0f) {
-                Toast.makeText(applicationContext, "Se realizo el cálculo, proceda a mostrar datos", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(applicationContext, "Cantidad excede las existencias", Toast.LENGTH_SHORT).show()
-            }
-            mostrarFlag = true
+            clickCalc()
         }
 
         botonMostrar.setOnClickListener {
-            if (mostrarFlag == false){
-                Toast.makeText(applicationContext, "Primero calcula los datos", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                mostrar()
-            }
+            clickMostrar()
         }
 
         botonRegresar.setOnClickListener {
@@ -79,5 +58,34 @@ class SecondActivity : AppCompatActivity() {
 
     private fun regresarAMain() {
         finish()
+    }
+
+    private fun clickMostrar(){
+        if (mostrarFlag == false){
+            Toast.makeText(applicationContext, "Primero calcula los datos", Toast.LENGTH_SHORT).show()
+        }
+        else{
+            mostrar()
+        }
+    }
+
+    private fun clickCalc(){
+        val nombre = intent.getStringExtra("nombre")
+        val precio = intent.getFloatExtra("precio", 0f)
+        val cantidad = intent.getIntExtra("cantidad", 0)
+
+        val calcular = Calcular()
+        calcular.setNombre(nombre ?: "")
+        calcular.setPrecio(precio)
+        calcular.setCantidad(cantidad)
+
+        val resultado = calcular.calcular()
+
+        if (resultado != null && resultado > 0f) {
+            Toast.makeText(applicationContext, "Se realizo el cálculo, proceda a mostrar datos", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(applicationContext, "Cantidad excede las existencias", Toast.LENGTH_SHORT).show()
+        }
+        mostrarFlag = true
     }
 }

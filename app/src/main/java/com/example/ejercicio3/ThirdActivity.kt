@@ -48,7 +48,6 @@ class ThirdActivity : AppCompatActivity() {
     }
 
     private fun mostrarDatos() {
-        // FIX: Use correct key names that match what was passed from SecondActivity
         val nombre = intent.getStringExtra("nombre") ?: ""
         val precio = intent.getFloatExtra("precio", 0f)
         val cantidad = intent.getIntExtra("cantidad", 0)

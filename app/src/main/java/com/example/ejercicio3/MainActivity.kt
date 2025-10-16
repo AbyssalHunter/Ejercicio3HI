@@ -32,15 +32,7 @@ class MainActivity : AppCompatActivity() {
         botonAsignar = findViewById(R.id.button)
 
         botonAsignar.setOnClickListener {
-            val producto = onClickListener()
-
-            if (producto.getNombre().isNotEmpty() && producto.getPrecio() > 0f && producto.getCantidad() > 0) {
-                val intent = Intent(this, SecondActivity::class.java)
-                intent.putExtra("nombre", producto.getNombre())
-                intent.putExtra("precio", producto.getPrecio())
-                intent.putExtra("cantidad", producto.getCantidad())
-                startActivity(intent)
-            }
+            btnAsignarClick()
         }
     }
 
@@ -59,5 +51,16 @@ class MainActivity : AppCompatActivity() {
         }
 
         return producto
+    }
+
+    fun btnAsignarClick(){
+        val producto = onClickListener()
+        if (producto.getNombre().isNotEmpty() && producto.getPrecio() > 0f && producto.getCantidad() > 0) {
+            val intent = Intent(this, SecondActivity::class.java)
+            intent.putExtra("nombre", producto.getNombre())
+            intent.putExtra("precio", producto.getPrecio())
+            intent.putExtra("cantidad", producto.getCantidad())
+            startActivity(intent)
+        }
     }
 }
